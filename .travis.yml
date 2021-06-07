@@ -13,9 +13,9 @@ script:
 
 after_success:
   - docker build -t nathanaeltan/multi-client ./client
-  - docker build -t nathanaaeltan/multi-nginx ./nginx
-  - docker build -t nathanaaeltan/multi-server ./server
-  - docker build -t nathanaaeltan/multi-worker ./worker
+  - docker build -t nathanaeltan/multi-nginx ./nginx
+  - docker build -t nathanaeltan/multi-server ./server
+  - docker build -t nathanaeltan/multi-worker ./worker
   # Log int to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #Push images to Dockerhub
