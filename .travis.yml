@@ -23,3 +23,16 @@ after_success:
   - docker push nathanaeltan/multi-nginx
   - docker push nathanaeltan/multi-server
   - docker push nathanaeltan/multi-worker
+
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-southeast-1"
+  app: "multi-docker"
+  env: "Multidocker-env"
+  bucket_name: "elasticbeanstalk-ap-southeast-1-840475189339"
+  bucket_path: "docker-multi"
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
