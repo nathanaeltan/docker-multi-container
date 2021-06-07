@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+language: node_js
+node_js:
+  - 10
+before_install:
+  - docker build -t nathanaeltan/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true nathanaeltan/react-test npm run test
+
+
+after_success:
+  - docker build -t nathanaeltan/multi-client ./client
+  - docker build -t nathanaaeltan/multi-nginx ./nginx
+  - docker build -t nathanaaeltan/multi-server ./server
+  - docker build -t nathanaaeltan/multi-worker ./worker
+  # Log int to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #Push images to Dockerhub
+  - docker push nathanaeltan/multi-client
+  - docker push nathanaeltan/multi-nginx
+  - docker push nathanaeltan/multi-server
+  - docker push nathanaeltan/multi-worker
